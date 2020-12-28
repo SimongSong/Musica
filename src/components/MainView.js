@@ -34,7 +34,7 @@ function MainView(){
         cube.position.set(0, 1.5, 0)
         scene.add( cube );
 
-        const planeGeometry = new THREE.PlaneGeometry( 20, 2000, 8, 8);
+        const planeGeometry = new THREE.PlaneGeometry( 16, 2000, 8, 8);
         const planeMaterial = new THREE.MeshLambertMaterial( {color: 0xb19cd9, side: THREE.DoubleSide,} );
         const plane = new THREE.Mesh( planeGeometry, planeMaterial );
         plane.rotateX(-Math.PI / 2);
@@ -43,15 +43,30 @@ function MainView(){
         
         const lineMaterial = new THREE.LineBasicMaterial( { color: 0x000000} );
         const lineGeometry = new THREE.Geometry();
+
+        
+        lineGeometry.vertices.push( new THREE.Vector3(-5, 0.1, -300));
+        lineGeometry.vertices.push( new THREE.Vector3(-5, 1.1, 9));
+        lineGeometry.vertices.push( new THREE.Vector3(-2.5, 0.1, -300));
+        lineGeometry.vertices.push( new THREE.Vector3(-2.5, 1.1, 9));
+        lineGeometry.vertices.push( new THREE.Vector3(0, 0.1, -300));
+        lineGeometry.vertices.push( new THREE.Vector3(0, 1.1, 9));
+        lineGeometry.vertices.push( new THREE.Vector3(2.5, 0.1, -300));
+        lineGeometry.vertices.push( new THREE.Vector3(2.5, 1.1, 9));
+        lineGeometry.vertices.push( new THREE.Vector3(5, 0.1, -300));
+        lineGeometry.vertices.push( new THREE.Vector3(5, 1.1, 9));
+
+        var line = new THREE.LineSegments( lineGeometry, lineMaterial );
+        scene.add( line );
         
 
         camera.position.z = 14;
         camera.position.y = 10;
-        camera.lookAt(0, 0, 0);
+        camera.lookAt(0, 3, 0);
 
-        const color = 0x000000;  // white
+        const color = 0x000000;
         const near = 10;
-        const far = 120;
+        const far = 60;
         scene.fog = new THREE.Fog(color, near, far);
 
         const animate = () => {
