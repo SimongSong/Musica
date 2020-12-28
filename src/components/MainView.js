@@ -27,25 +27,32 @@ function MainView(){
         light.shadow.camera.far = 500;
 
         const geometry = new THREE.BoxGeometry();
-        const material = new THREE.MeshLambertMaterial( { color: 0x00ff00 } );
+        const material = new THREE.MeshLambertMaterial( { color: 0x00ffff } );
         const cube = new THREE.Mesh( geometry, material );
         cube.castShadow = true;
         cube.receiveShadow = false;
         cube.position.set(0, 1.5, 0)
         scene.add( cube );
 
-        const planeGeometry = new THREE.PlaneGeometry( 20, 200, 8, 8);
-        const planeMaterial = new THREE.MeshLambertMaterial( {color: 0xffd1dc, side: THREE.DoubleSide,} );
+        const planeGeometry = new THREE.PlaneGeometry( 20, 2000, 8, 8);
+        const planeMaterial = new THREE.MeshLambertMaterial( {color: 0xb19cd9, side: THREE.DoubleSide,} );
         const plane = new THREE.Mesh( planeGeometry, planeMaterial );
         plane.rotateX(-Math.PI / 2);
         plane.receiveShadow = true;
         scene.add( plane );
         
+        const lineMaterial = new THREE.LineBasicMaterial( { color: 0x000000} );
+        const lineGeometry = new THREE.Geometry();
         
 
-        camera.position.z = 12;
+        camera.position.z = 14;
         camera.position.y = 10;
-        camera.lookAt(0, 0, 0)
+        camera.lookAt(0, 0, 0);
+
+        const color = 0x000000;  // white
+        const near = 10;
+        const far = 120;
+        scene.fog = new THREE.Fog(color, near, far);
 
         const animate = () => {
             requestAnimationFrame( animate );
