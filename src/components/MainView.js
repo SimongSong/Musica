@@ -1,6 +1,14 @@
 import React, { useEffect, useRef } from 'react'
 import ReactDOM from "react-dom";
 import * as THREE from "three";
+
+import bk from './img/corona_bk.png';
+import dn from './img/corona_dn.png';
+import ft from './img/corona_ft.png';
+import lf from './img/corona_lf.png';
+import rt from './img/corona_rt.png';
+import up from './img/corona_up.png';
+
 function MainView(){
     const ref = useRef();
     useEffect(() => {
@@ -30,12 +38,12 @@ function MainView(){
         //Will need to find a way to use local images for the skybox
         const loader = new THREE.CubeTextureLoader();
         const texture = loader.load([
-            'corona_bk.jpg',
-            'corona_dn.jpg',
-            'corona_ft.jpg',
-            'corona_lf.jpg',
-            'corona_rt.jpg',
-            'corona_up.jpg',
+            ft,
+            bk,
+            up,
+            dn,
+            rt,
+            lf,
         ]);
         scene.background = texture;
 
@@ -80,7 +88,7 @@ function MainView(){
         camera.position.y = 10;
         camera.lookAt(0, 3, 0);
 
-        const color = 0x000000;
+        const color = 0x090309;
         const near = 10;
         const far = 60;
         scene.fog = new THREE.Fog(color, near, far);
