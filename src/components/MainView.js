@@ -73,20 +73,20 @@ function MainView(){
         planeMaterial.side = THREE.DoubleSide;
         scene.add( plane );
         
-        const lineMaterial = new THREE.LineBasicMaterial( { color: 0xffffff} );
+        const lineMaterial = new THREE.LineBasicMaterial( { color: 0xbbbbbb} );
         const lineGeometry = new THREE.Geometry();
 
         //Lines used to drop down the nodes
-        lineGeometry.vertices.push( new THREE.Vector3(-5, 0.1, -300));
-        lineGeometry.vertices.push( new THREE.Vector3(-5, 1.1, 9));
-        lineGeometry.vertices.push( new THREE.Vector3(-2.5, 0.1, -300));
-        lineGeometry.vertices.push( new THREE.Vector3(-2.5, 1.1, 9));
-        lineGeometry.vertices.push( new THREE.Vector3(0, 0.1, -300));
-        lineGeometry.vertices.push( new THREE.Vector3(0, 1.1, 9));
-        lineGeometry.vertices.push( new THREE.Vector3(2.5, 0.1, -300));
-        lineGeometry.vertices.push( new THREE.Vector3(2.5, 1.1, 9));
-        lineGeometry.vertices.push( new THREE.Vector3(5, 0.1, -300));
-        lineGeometry.vertices.push( new THREE.Vector3(5, 1.1, 9));
+        lineGeometry.vertices.push( new THREE.Vector3(-5, 0.5, -300));
+        lineGeometry.vertices.push( new THREE.Vector3(-5, 0.5, 9));
+        lineGeometry.vertices.push( new THREE.Vector3(-2.5, 0.5, -300));
+        lineGeometry.vertices.push( new THREE.Vector3(-2.5, 0.5, 9));
+        lineGeometry.vertices.push( new THREE.Vector3(0, 0.5, -300));
+        lineGeometry.vertices.push( new THREE.Vector3(0, 0.5, 9));
+        lineGeometry.vertices.push( new THREE.Vector3(2.5, 0.5, -300));
+        lineGeometry.vertices.push( new THREE.Vector3(2.5, 0.5, 9));
+        lineGeometry.vertices.push( new THREE.Vector3(5, 0.5, -300));
+        lineGeometry.vertices.push( new THREE.Vector3(5, 0.5, 9));
 
         var line = new THREE.LineSegments( lineGeometry, lineMaterial );
         scene.add( line );
