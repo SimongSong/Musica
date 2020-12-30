@@ -73,24 +73,11 @@ function MainView(){
         planeMaterial.side = THREE.DoubleSide;
         scene.add( plane );
         
-        const lineMaterial = new THREE.LineBasicMaterial( { color: 0xbbbbbb} );
+        const lineMaterial = new THREE.LineBasicMaterial( { color: 0x000000} );
         const lineGeometry = new THREE.Geometry();
 
-        //Lines used to drop down the nodes
-        lineGeometry.vertices.push( new THREE.Vector3(-5, 0.5, -300));
-        lineGeometry.vertices.push( new THREE.Vector3(-5, 0.5, 9));
-        lineGeometry.vertices.push( new THREE.Vector3(-2.5, 0.5, -300));
-        lineGeometry.vertices.push( new THREE.Vector3(-2.5, 0.5, 9));
-        lineGeometry.vertices.push( new THREE.Vector3(0, 0.5, -300));
-        lineGeometry.vertices.push( new THREE.Vector3(0, 0.5, 9));
-        lineGeometry.vertices.push( new THREE.Vector3(2.5, 0.5, -300));
-        lineGeometry.vertices.push( new THREE.Vector3(2.5, 0.5, 9));
-        lineGeometry.vertices.push( new THREE.Vector3(5, 0.5, -300));
-        lineGeometry.vertices.push( new THREE.Vector3(5, 0.5, 9));
 
-        var line = new THREE.LineSegments( lineGeometry, lineMaterial );
-        scene.add( line );
-
+        //edges of the platform to make it look neater
         const edgeGeometry1 = new THREE.BoxGeometry(1, 1, 500);
         const edgeGeometry2 = new THREE.BoxGeometry(1, 1, 500);
         const edgeTexture = planeLoader.load(platformTexture);
@@ -99,14 +86,38 @@ function MainView(){
         edgeTexture.wrapT = THREE.RepeatWrapping;
         edgeTexture.repeat.set(.1, 30);
 
-
         const edge1 = new THREE.Mesh ( edgeGeometry1, edgeMaterial );
         const edge2 = new THREE.Mesh ( edgeGeometry2, edgeMaterial );
 
-        edge1.position.set(8, .3, 0);
-        edge2.position.set(-8, .3, 0)
+        edge1.position.set(8, 0, 0);
+        edge2.position.set(-8, 0, 0)
         scene.add(edge1);
         scene.add(edge2);
+        
+
+        //Lines for the nodes to drop down
+        const nodeLineGeometry = new THREE.BoxGeometry(0.2, 0.2, 500);
+        const nodeLineMaterial = new THREE.MeshLambertMaterial({color: 0x999999});
+        const nodeLine1 = new THREE.Mesh(nodeLineGeometry, nodeLineMaterial);
+        const nodeLine2 = new THREE.Mesh(nodeLineGeometry, nodeLineMaterial);
+        const nodeLine3 = new THREE.Mesh(nodeLineGeometry, nodeLineMaterial);
+        const nodeLine4 = new THREE.Mesh(nodeLineGeometry, nodeLineMaterial);
+        const nodeLine5 = new THREE.Mesh(nodeLineGeometry, nodeLineMaterial);
+        
+        nodeLine1.position.set(-5, .1, -242)
+        nodeLine2.position.set(-2.5, .1, -242)
+        nodeLine3.position.set(0, .1, -242)
+        nodeLine4.position.set(2.5, .1, -242)
+        nodeLine5.position.set(5, .1, -242)
+
+        let nodeLineList = [nodeLine1, nodeLine2, nodeLine3, nodeLine4, nodeLine5]
+
+        for (let i = 0; i < 5; i++) {
+            nodeLineList[i].receiveShadow = true;
+            nodeLineList[i].castShadow = true;
+            scene.add(nodeLineList[i])
+        }
+
 
         
         //Camera positioning
