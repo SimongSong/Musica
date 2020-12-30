@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import * as THREE from "three";
-import { Mesh } from 'three';
+import { MeshLine, MeshLineMaterial, MeshLineRaycast } from 'three.meshline';
 
 import bk from './img/corona_bk.png';
 import dn from './img/corona_dn.png';
