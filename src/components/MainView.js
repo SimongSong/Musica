@@ -72,10 +72,6 @@ function MainView(){
         plane.receiveShadow = true;
         planeMaterial.side = THREE.DoubleSide;
         scene.add( plane );
-        
-        const lineMaterial = new THREE.LineBasicMaterial( { color: 0x000000} );
-        const lineGeometry = new THREE.Geometry();
-
 
         //edges of the platform to make it look neater
         const edgeGeometry1 = new THREE.BoxGeometry(1, 1, 500);
@@ -97,7 +93,7 @@ function MainView(){
 
         //Lines for the nodes to drop down
         const nodeLineGeometry = new THREE.BoxGeometry(0.2, 0.2, 500);
-        const nodeLineMaterial = new THREE.MeshLambertMaterial({color: 0x999999});
+        const nodeLineMaterial = new THREE.MeshLambertMaterial({ color: 0x999999 });
         const nodeLine1 = new THREE.Mesh(nodeLineGeometry, nodeLineMaterial);
         const nodeLine2 = new THREE.Mesh(nodeLineGeometry, nodeLineMaterial);
         const nodeLine3 = new THREE.Mesh(nodeLineGeometry, nodeLineMaterial);
