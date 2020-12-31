@@ -7,8 +7,8 @@ export const mainSlice = createSlice({
     timer: 1,
   },
   reducers: {
-    incrementTimer: (state) => {
-      state.timer++
+    updateTimer: (state, action) => {
+      state.timer = action.payload
     },
     clearTimer: (state) => {
       state.timer = 0;
@@ -20,7 +20,7 @@ export const mainSlice = createSlice({
 });
 
 export const {
-  incrementTimer,
+  updateTimer,
   clearTimer,
   incrementScorer,
 } = mainSlice.actions;
