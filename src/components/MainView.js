@@ -86,7 +86,7 @@ function MainView(){
         const edge2 = new THREE.Mesh ( edgeGeometry2, edgeMaterial );
 
         edge1.position.set(8, 0, 0);
-        edge2.position.set(-8, 0, 0)
+        edge2.position.set(-8, 0, 0);
         scene.add(edge1);
         scene.add(edge2);
         
@@ -136,6 +136,13 @@ function MainView(){
             renderer.render( scene, camera );
         };
 
+        const onWindowResize= () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        window.addEventListener('resize', onWindowResize, false);
         animate();
     }, [])
  
