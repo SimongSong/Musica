@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import * as THREE from "three";
-import { MeshLine, MeshLineMaterial, MeshLineRaycast } from 'three.meshline';
+import RenderNode from './RenderNode'
 
 import bk from './img/corona_bk.png';
 import dn from './img/corona_dn.png';
@@ -16,16 +16,19 @@ function MainView(){
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
-        const renderer = new THREE.WebGLRenderer();
+        const renderer = new THREE.WebGLRenderer({
+            antialias: true,
+        });
         renderer.shadowMap.enabled = true;
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        renderer.setClearColor(0xFFFFFF, 0.5);
         renderer.setSize( window.innerWidth, window.innerHeight );
         document.body.appendChild( renderer.domElement );
 
 
         //Create a DirectionalLight and turn on shadows for the light
         const light1 = new THREE.DirectionalLight( 0xffffff, 1.2, 100 );
-        light1.position.set( -5, 20, 0 );
+        light1.position.set( -5, 20, 10 );
         light1.castShadow = true;
         scene.add( light1 );
 
@@ -48,14 +51,6 @@ function MainView(){
         ]);
         scene.background = texture;
 
-        //Dummy Box to test out shadows, lighting, and positioning
-        const geometry = new THREE.BoxGeometry();
-        const material = new THREE.MeshLambertMaterial( { color: 0x00ffff } );
-        const cube = new THREE.Mesh( geometry, material );
-        cube.castShadow = true;
-        cube.receiveShadow = false;
-        cube.position.set(0, 1.5, 0)
-        scene.add( cube );
 
         //The plane where the game will be played
         const planeGeometry = new THREE.PlaneGeometry( 16, 600, 8, 8);
@@ -114,7 +109,31 @@ function MainView(){
             scene.add(nodeLineList[i])
         }
 
+        //Temporarily used to visualize RenderNode function. (Will have to incorporate another function)
+        let myNode = RenderNode(4);
+        scene.add(myNode);
 
+        const platformGeometry = new THREE.CylinderGeometry(.8, .8, 0.5, 10);
+        const platformMaterial = new THREE.MeshLambertMaterial({ color: 0x999999 });
+        const platform1 = new THREE.Mesh(platformGeometry, platformMaterial);
+        const platform2 = new THREE.Mesh(platformGeometry, platformMaterial);
+        const platform3 = new THREE.Mesh(platformGeometry, platformMaterial);
+        const platform4 = new THREE.Mesh(platformGeometry, platformMaterial);
+        const platform5 = new THREE.Mesh(platformGeometry, platformMaterial);
+
+        platform1.position.set(-5, .1, 7.3);
+        platform2.position.set(-2.5, .1, 7.3);
+        platform3.position.set(0, .1, 7.3);
+        platform4.position.set(2.5, .1, 7.3);
+        platform5.position.set(5, .1, 7.3);
+
+        let platformList = [platform1, platform2, platform3, platform4, platform5];
+
+        for (let i = 0; i < 5; i++) {
+            platformList[i].receiveShadow = true;
+            platformList[i].castShadow = true;
+            scene.add(platformList[i])
+        }
         
         //Camera positioning
         camera.position.z = 14;
@@ -130,8 +149,8 @@ function MainView(){
         const animate = () => {
             requestAnimationFrame( animate );
 
-            cube.rotation.x += 0.01;
-            cube.rotation.y += 0.01;
+            //Temporarily placed to visualize RenderNode function.
+            myNode.translateZ(0.2);
 
             renderer.render( scene, camera );
         };
@@ -141,8 +160,9 @@ function MainView(){
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
         }
-
+        
         window.addEventListener('resize', onWindowResize, false);
+        
         animate();
     }, [])
  
