@@ -114,11 +114,13 @@ function MainView(){
         scene.add(myNode);
 
         const platformGeometry = new THREE.CylinderGeometry(.8, .8, 0.5, 10);
+        const centerGeometry = new THREE.CylinderGeometry(.6, .6, 0.5, 10);
         const platformMaterial1 = new THREE.MeshLambertMaterial({ color: 0xaa0028 });
         const platformMaterial2 = new THREE.MeshLambertMaterial({ color: 0xf67f46 });
         const platformMaterial3 = new THREE.MeshLambertMaterial({ color: 0xccc588 });
         const platformMaterial4 = new THREE.MeshLambertMaterial({ color: 0x00544c });
         const platformMaterial5 = new THREE.MeshLambertMaterial({ color: 0x003238 });
+        const centerMaterial = new THREE.MeshLambertMaterial({ color: 0xffffff });
 
         const platform1 = new THREE.Mesh(platformGeometry, platformMaterial1);
         const platform2 = new THREE.Mesh(platformGeometry, platformMaterial2);
@@ -126,18 +128,35 @@ function MainView(){
         const platform4 = new THREE.Mesh(platformGeometry, platformMaterial4);
         const platform5 = new THREE.Mesh(platformGeometry, platformMaterial5);
 
+        const center1 = new THREE.Mesh(centerGeometry, centerMaterial);
+        const center2 = new THREE.Mesh(centerGeometry, centerMaterial);
+        const center3 = new THREE.Mesh(centerGeometry, centerMaterial);
+        const center4 = new THREE.Mesh(centerGeometry, centerMaterial);
+        const center5 = new THREE.Mesh(centerGeometry, centerMaterial);
+
         platform1.position.set(-5, .1, 7.3);
         platform2.position.set(-2.5, .1, 7.3);
         platform3.position.set(0, .1, 7.3);
         platform4.position.set(2.5, .1, 7.3);
         platform5.position.set(5, .1, 7.3);
 
+        center1.position.set(-5, .2, 7.3);
+        center2.position.set(-2.5, .2, 7.3);
+        center3.position.set(0, .2, 7.3);
+        center4.position.set(2.5, .2, 7.3);
+        center5.position.set(5, .2, 7.3);
+
         let platformList = [platform1, platform2, platform3, platform4, platform5];
+        let centerList = [center1, center2, center3, center4, center5];
 
         for (let i = 0; i < 5; i++) {
             platformList[i].receiveShadow = true;
             platformList[i].castShadow = true;
             scene.add(platformList[i])
+
+            centerList[i].receiveShadow = true;
+            centerList[i].castShadow = true;
+            scene.add(centerList[i])
         }
 
         
@@ -157,7 +176,7 @@ function MainView(){
             requestAnimationFrame( animate );
 
             //Temporarily placed to visualize RenderNode function.
-            myNode.translateZ(0.2);
+            myNode.translateZ(0.15);
 
             renderer.render( scene, camera );
         };
