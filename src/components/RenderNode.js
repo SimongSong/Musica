@@ -1,13 +1,14 @@
 import * as THREE from "three";
+const nodeGeometry = new THREE.CylinderGeometry(.5, .7, .3, 10);
+
+const nodeMaterial1 = new THREE.MeshLambertMaterial( { color: 0xffffff } );
+const nodeMaterial2 = new THREE.MeshLambertMaterial( { color: 0x00ffff } );
+const nodeMaterial3 = new THREE.MeshLambertMaterial( { color: 0xff00ff } );
+const nodeMaterial4 = new THREE.MeshLambertMaterial( { color: 0xffff00 } );
+const nodeMaterial5 = new THREE.MeshLambertMaterial( { color: 0x000000 } );
 
 function RenderNode(laneNumber) {
-    const nodeGeometry = new THREE.CylinderGeometry(.5, .7, .3, 10);
 
-    const nodeMaterial1 = new THREE.MeshLambertMaterial( { color: 0xffffff } );
-    const nodeMaterial2 = new THREE.MeshLambertMaterial( { color: 0x00ffff } );
-    const nodeMaterial3 = new THREE.MeshLambertMaterial( { color: 0xff00ff } );
-    const nodeMaterial4 = new THREE.MeshLambertMaterial( { color: 0xffff00 } );
-    const nodeMaterial5 = new THREE.MeshLambertMaterial( { color: 0x000000 } );
     let node;
     
     if (laneNumber === 1) {

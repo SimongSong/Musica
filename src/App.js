@@ -12,8 +12,9 @@ import AudioComponent from "./components/audioComponent";
 function App() {
   const [song, setSong] = useState("song1");
   const [playing, setPlaying] = useState(true);
+  const dispatch = useDispatch()
   const timer = useSelector((state) => state.main.timer);
-  const score = useSelector((state) => state.main.score);
+  const score = useSelector((state) => state.main.tempo);
 
 
   useEffect(() => {
@@ -23,11 +24,16 @@ function App() {
     };
   }, []);
 
+  function updatePlaying(){
+    setPlaying(!playing)
+    // dispatch(updatePlaying(playing))
+  }
+
 
   return (
     <div className="App">
       <AudioComponent songtitle={song} status={playing}></AudioComponent>
-      <button onClick={() => setPlaying(!playing)}>test</button>
+      <button onClick={() => updatePlaying()}>test</button>
       <button onClick={() => setSong("song1")}>test load song 1</button>
       <button onClick={() => setSong("song2")}>test load song 2</button>
       
