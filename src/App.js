@@ -1,48 +1,42 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect, useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import logo from "./logo.svg";
 import "./App.css";
 import MainView from "./components/MainView";
 import { clearTimer, incrementTimer } from "./store/mainReducer";
+import { escFunction } from "./gameManager/inputUtils";
+import AudioComponent from "./components/audioComponent";
+
+
 
 function App() {
-  const dispatch = useDispatch();
+  const [song, setSong] = useState("song1");
+  const [playing, setPlaying] = useState(true);
+  const dispatch = useDispatch()
   const timer = useSelector((state) => state.main.timer);
-  const score = useSelector((state) => state.main.score);
+  const score = useSelector((state) => state.main.tempo);
+
 
   useEffect(() => {
-    var interval = setInterval(() => dispatch(incrementTimer()), 100);
-    const escFunction = (event) => {
-      if (event.keyCode === 81) {
-        //Q pressed
-        console.log("Q")
-      }
-      else if (event.keyCode === 87) {
-        //W pressed
-        console.log("W")
-      }
-      else if (event.keyCode === 69) {
-        //E pressed
-        console.log("E")
-      }
-      else if (event.keyCode === 82) {
-        //R pressed
-        console.log("R")
-      }
-      else if (event.keyCode === 27) {
-        //Esc pressed        
-        console.log("Esc")
-      }
-    };
     window.addEventListener("keydown", escFunction);
     return () => {
-      dispatch(clearTimer());
-      clearInterval(interval);
       window.removeEventListener("keydown", escFunction);
     };
   }, []);
+
+  function updatePlaying(){
+    setPlaying(!playing)
+    // dispatch(updatePlaying(playing))
+  }
+
+
   return (
     <div className="App">
+      <AudioComponent songtitle={song} status={playing}></AudioComponent>
+      <button onClick={() => updatePlaying()}>test</button>
+      <button onClick={() => setSong("song1")}>test load song 1</button>
+      <button onClick={() => setSong("song2")}>test load song 2</button>
+      
       time {timer} score {score}
       <MainView></MainView>
     </div>
