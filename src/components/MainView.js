@@ -95,11 +95,11 @@ function MainView(){
         const nodeLine4 = new THREE.Mesh(nodeLineGeometry, nodeLineMaterial);
         const nodeLine5 = new THREE.Mesh(nodeLineGeometry, nodeLineMaterial);
         
-        nodeLine1.position.set(-5, .1, -242)
-        nodeLine2.position.set(-2.5, .1, -242)
-        nodeLine3.position.set(0, .1, -242)
-        nodeLine4.position.set(2.5, .1, -242)
-        nodeLine5.position.set(5, .1, -242)
+        nodeLine1.position.set(-5, .1, -200);
+        nodeLine2.position.set(-2.5, .1, -200);
+        nodeLine3.position.set(0, .1, -200);
+        nodeLine4.position.set(2.5, .1, -200);
+        nodeLine5.position.set(5, .1, -200);
 
         let nodeLineList = [nodeLine1, nodeLine2, nodeLine3, nodeLine4, nodeLine5]
 
@@ -114,12 +114,17 @@ function MainView(){
         scene.add(myNode);
 
         const platformGeometry = new THREE.CylinderGeometry(.8, .8, 0.5, 10);
-        const platformMaterial = new THREE.MeshLambertMaterial({ color: 0x999999 });
-        const platform1 = new THREE.Mesh(platformGeometry, platformMaterial);
-        const platform2 = new THREE.Mesh(platformGeometry, platformMaterial);
-        const platform3 = new THREE.Mesh(platformGeometry, platformMaterial);
-        const platform4 = new THREE.Mesh(platformGeometry, platformMaterial);
-        const platform5 = new THREE.Mesh(platformGeometry, platformMaterial);
+        const platformMaterial1 = new THREE.MeshLambertMaterial({ color: 0xaa0028 });
+        const platformMaterial2 = new THREE.MeshLambertMaterial({ color: 0xf67f46 });
+        const platformMaterial3 = new THREE.MeshLambertMaterial({ color: 0xccc588 });
+        const platformMaterial4 = new THREE.MeshLambertMaterial({ color: 0x00544c });
+        const platformMaterial5 = new THREE.MeshLambertMaterial({ color: 0x003238 });
+
+        const platform1 = new THREE.Mesh(platformGeometry, platformMaterial1);
+        const platform2 = new THREE.Mesh(platformGeometry, platformMaterial2);
+        const platform3 = new THREE.Mesh(platformGeometry, platformMaterial3);
+        const platform4 = new THREE.Mesh(platformGeometry, platformMaterial4);
+        const platform5 = new THREE.Mesh(platformGeometry, platformMaterial5);
 
         platform1.position.set(-5, .1, 7.3);
         platform2.position.set(-2.5, .1, 7.3);
@@ -134,6 +139,8 @@ function MainView(){
             platformList[i].castShadow = true;
             scene.add(platformList[i])
         }
+
+        
         
         //Camera positioning
         camera.position.z = 14;
