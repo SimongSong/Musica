@@ -1,8 +1,8 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import RenderNode from "./RenderNode";
 import { useDispatch, useSelector } from "react-redux";
-
+import "./MainView.css";
 import bk from "./img/corona_bk.png";
 import dn from "./img/corona_dn.png";
 import ft from "./img/corona_ft.png";
@@ -13,11 +13,23 @@ import platformTexture from "./texture/plane_texture_3.jpg";
 
 function MainView() {
   const ref = useRef();
-  const tempo = useSelector(state => state.main.tempo)
-  const tab = useSelector(state => state.main.tab)
-  const playing = useSelector(state => state.main.playing)
+  const tempo = useSelector((state) => state.main.tempo);
+  const tab = useSelector((state) => state.main.tab);
+  const playing = useSelector((state) => state.main.playing);
 
   useEffect(() => {
+    let animationID = 0;
+    const canvas = ref.current;
+    const cleanMaterial = (material) => {
+      material.dispose();
+      for (const key of Object.keys(material)) {
+        const value = material[key];
+        if (value && typeof value === "object" && "minFilter" in value) {
+          value.dispose();
+        }
+      }
+    };
+
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(
       75,
@@ -33,7 +45,7 @@ function MainView() {
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     renderer.setClearColor(0xffffff, 0.5);
     renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
+    canvas.appendChild(renderer.domElement);
 
     //Create a DirectionalLight and turn on shadows for the light
     const light1 = new THREE.DirectionalLight(0xffffff, 1.2, 100);
@@ -149,63 +161,49 @@ function MainView() {
       tempoCounter,
       tempoCounterThen = then;
 
-    //Temporarily used to visualize RenderNode function. (Will have to incorporate another function)
-    let myNode1 = RenderNode(1);
-    scene.add(myNode1);
-    let myNode2 = RenderNode(2);
-    scene.add(myNode2);
-    let myNode3 = RenderNode(3);
-    scene.add(myNode3);
-    let myNode4 = RenderNode(4);
-    scene.add(myNode4);
-    let fe = [];
-
-    fe.push(myNode1);
-    fe.push(myNode2);
-    fe.push(myNode3);
-    fe.push(myNode4);
+    let nodes = [];
 
     const FPS = 1000 / 60;
     const TEMPO = 1000 / 1;
     const animate = () => {
-      requestAnimationFrame(animate);
+      animationID = requestAnimationFrame(animate);
+      if (canvas.dataset.status === "true") {
+        now = Date.now();
+        elapsed = now - then;
+        tempoCounter = now - tempoCounterThen;
 
-      now = Date.now();
-      elapsed = now - then;
-      tempoCounter = now - tempoCounterThen;
-    
+        if (tempoCounter > TEMPO) {
+          tempoCounterThen = now;
 
-      if (tempoCounter > TEMPO) {
-        tempoCounterThen = now;
-        let node = RenderNode(1);
-        fe.push(node)
-        scene.add(node);
-        // if(tab.length > 0 && tabCounter < tab.length){
-        //     if(tab[tabCounter]) console.log(tab[tabCounter], tabCounter)
-        //     if(tab[tabCounter]) 
-        //     for(var i = 0; i < tab[tabCounter].length; i++){
-        //         let node = RenderNode(i + 1);
-        //         fe.push(node)
-        //         scene.add(node);
-        //         tabCounter++
-        //     }
-        // }
-      }
-
-      if (elapsed > FPS) {
-        then = now - (elapsed % FPS);
-        // Remove node once its out
-        for (var i = 0; i < fe.length; i++) {
-          let node = fe[i]
-            if (node.position.z > 10) {
-            scene.remove(node);
-            fe.splice(i, 1);
-          } else {
-            node.translateZ(0.2);
+          if (tab.length > 0 && tabCounter < tab.length) {
+            if (tab[tabCounter]) {
+              for (var i = 0; i < tab[tabCounter].length; i++) {
+                if (tab[tabCounter][i]) {
+                  let node = RenderNode(i + 1);
+                  nodes.push(node);
+                  scene.add(node);
+                }
+              }
+              tabCounter++;
+            }
           }
         }
 
-        renderer.render(scene, camera);
+        if (elapsed > FPS) {
+          then = now - (elapsed % FPS);
+          // Remove node once its out
+          for (var i = 0; i < nodes.length; i++) {
+            let node = nodes[i];
+            if (node.position.z > 10) {
+              scene.remove(node);
+              nodes.splice(i, 1);
+            } else {
+              node.translateZ(0.2);
+            }
+          }
+
+          renderer.render(scene, camera);
+        }
       }
     };
 
@@ -218,9 +216,22 @@ function MainView() {
     window.addEventListener("resize", onWindowResize, false);
 
     animate();
+    return () => {
+      scene.traverse((object) => {
+        if (!object.isMesh) return;
+        object.geometry.dispose();
+        if (object.material.isMaterial) {
+          cleanMaterial(object.material);
+        } else {
+          for (const material of object.material) cleanMaterial(material);
+        }
+      });
+      cancelAnimationFrame(animationID);
+      canvas.removeChild(renderer.domElement);
+    };
   }, [tab]);
 
-  return <canvas ref={ref}></canvas>;
+  return <div id="MainCanvas" ref={ref} data-status={playing}></div>;
 }
 
 export default MainView;
