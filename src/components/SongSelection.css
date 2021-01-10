@@ -1,0 +1,28 @@
+#SongSelection {
+  width: 100%;
+  height: 100%;
+  background-color: grey;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+
+  text-align: center;
+}
+.SongWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.SongWrapper .Song{
+    display: inline-block;
+    cursor: pointer;
+}
+
+.Song .Cover{
+    display: inline-block;
+    width: 200px;
+    height: 250px;
+    background-color: red;
+}
+
