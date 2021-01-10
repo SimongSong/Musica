@@ -3,19 +3,21 @@ import { useDispatch, useSelector } from "react-redux";
 import logo from "./logo.svg";
 import "./App.css";
 import MainView from "./components/MainView";
-import { clearTimer, incrementTimer } from "./store/mainReducer";
+import {
+  clearTimer,
+  incrementTimer,
+  updatePlayingStatus,
+} from "./store/mainReducer";
 import { escFunction } from "./gameManager/inputUtils";
 import AudioComponent from "./components/audioComponent";
 
-
-
 function App() {
   const [song, setSong] = useState("song1");
-  const [playing, setPlaying] = useState(true);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const timer = useSelector((state) => state.main.timer);
   const score = useSelector((state) => state.main.tempo);
 
+  const playing = useSelector((state) => state.main.playing);
 
   useEffect(() => {
     window.addEventListener("keydown", escFunction);
@@ -24,20 +26,20 @@ function App() {
     };
   }, []);
 
-  function updatePlaying(){
-    setPlaying(!playing)
-    // dispatch(updatePlaying(playing))
+  function updatePlaying() {
+    dispatch(updatePlayingStatus(!playing));
   }
-
 
   return (
     <div className="App">
-      <AudioComponent songtitle={song} status={playing}></AudioComponent>
-      <button onClick={() => updatePlaying()}>test</button>
-      <button onClick={() => setSong("song1")}>test load song 1</button>
-      <button onClick={() => setSong("song2")}>test load song 2</button>
-      
-      time {timer} score {score}
+      <div className="TempHolder">
+        <AudioComponent songtitle={song}></AudioComponent>
+        <button onClick={() => updatePlaying()}>Play/Pause</button>
+        <button onClick={() => setSong("song1")}>test load song 1</button>
+        <button onClick={() => setSong("song2")}>test load song 2</button>
+        time {timer} score {score} playing {playing ? "playing" : "paused"}
+      </div>
+
       <MainView></MainView>
     </div>
   );

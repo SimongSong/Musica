@@ -1,13 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateTimer, loadTab } from "../store/mainReducer";
 import musicfile1 from "../resources/music/musicsample.mp3";
 import musicfile2 from "../resources/music/musicsample2.mp3";
 import tab1 from "../resources/tabs/tab1";
 import tab2 from "../resources/tabs/tab2";
 
-const AudioComponent = ({ songtitle, status }) => {
-  const [titleCache, setCache] = useState("")
+const AudioComponent = ({ songtitle }) => {
+  const [titleCache, setCache] = useState("");
+  const playing = useSelector((state) => state.main.playing);
+
   const dispatch = useDispatch();
   const ref = useRef();
   const musicMap = {
@@ -27,25 +29,24 @@ const AudioComponent = ({ songtitle, status }) => {
     ref.current.addEventListener("timeupdate", (e) =>
       dispatch(updateTimer(e.target.currentTime))
     );
-    if(titleCache !== songtitle) {
-      setCache(songtitle)
+    if (titleCache !== songtitle) {
+      setCache(songtitle);
       dispatch(
-        loadTab
-        ({
+        loadTab({
           tab: musicMap[songtitle].tab,
           tempo: musicMap[songtitle].tempo,
-        }))
+        })
+      );
     }
-    
 
-    if (status) ref.current.play();
+    if (playing) ref.current.play();
     else ref.current.pause();
     return () => {
       ref.current.removeEventListener("timeupdate", () => {});
     };
-  }, [songtitle, status]);
+  }, [songtitle, playing]);
   return (
-    <audio ref={ref} preload="auto" src={musicMap[songtitle].audio} autoPlay />
+    <audio ref={ref} preload="auto" src={musicMap[songtitle].audio} />
   );
 };
 

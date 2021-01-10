@@ -20,7 +20,7 @@ export const mainSlice = createSlice({
     incrementScore: (state) => {
       state.score = state.score++;
     },
-    updatePlaying: (state, action) => {
+    updatePlayingStatus: (state, action) => {
       console.log(action)
       state.playing = action.payload
     },
@@ -34,7 +34,7 @@ export const mainSlice = createSlice({
 export const {
   loadTab,
   updateTimer,
-  updatePlaying,
+  updatePlayingStatus,
   clearTimer,
   incrementScorer,
 } = mainSlice.actions;
