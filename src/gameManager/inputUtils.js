@@ -11,6 +11,9 @@ export const escFunction = (event) => {
   } else if (event.keyCode === 82) {
     //R pressed
     console.log("R");
+  } else if (event.keyCode === 84) {
+    //R pressed
+    console.log("T"); 
   } else if (event.keyCode === 27) {
     //Esc pressed
     console.log("Esc");

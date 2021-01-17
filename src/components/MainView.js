@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import RenderNode from "./RenderNode";
 import { useDispatch, useSelector } from "react-redux";
+import { escFunction } from "../gameManager/inputUtils";
 import "./MainView.css";
 import bk from "./img/corona_bk.png";
 import dn from "./img/corona_dn.png";
@@ -165,6 +166,7 @@ function MainView() {
         scene.add(centerList[i])
     }
 
+
     //Camera positioning
     camera.position.z = 14;
     camera.position.y = 10;
@@ -190,6 +192,8 @@ function MainView() {
     const FPS = 1000 / 60;
     const TEMPO = 1000 / 1;
     const animate = () => {
+
+      window.addEventListener("keydown", escFunction);
       animationID = requestAnimationFrame(animate);
       if (canvas.dataset.status === "true") {
         now = Date.now();
@@ -218,11 +222,25 @@ function MainView() {
           // Remove node once its out
           for (var i = 0; i < nodes.length; i++) {
             let node = nodes[i];
+            node.translateZ(0.2);
             if (node.position.z > 10) {
               scene.remove(node);
               nodes.splice(i, 1);
-            } else {
-              node.translateZ(0.2);
+            } 
+            
+            if (node.position.z > 6.5 && node.position.z < 7.6) {
+              if (node.position.x === -5) {
+                //if key q is pressed --> disappear and update score
+              } else if (node.position.x === -2.5) {
+                //if key w is pressed --> disappear and update score
+              } else if (node.position.x === 0) {
+                //if key e is pressed --> disappear and update score
+              } else if (node.position.x === 2.5) {
+                //if key r is pressed --> disappear and update score
+              } else if (node.position.x === 5) {
+                //if key t is pressed --> disappear and update score
+              }
+
             }
           }
 

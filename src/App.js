@@ -21,12 +21,6 @@ function App() {
 
   const playing = useSelector((state) => state.main.playing);
 
-  useEffect(() => {
-    window.addEventListener("keydown", escFunction);
-    return () => {
-      window.removeEventListener("keydown", escFunction);
-    };
-  }, []);
 
   function updatePlaying() {
     setMenuOpen(!menuOpen)
