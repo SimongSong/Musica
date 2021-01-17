@@ -7,7 +7,7 @@ const nodeMaterial3 = new THREE.MeshLambertMaterial( { color: 0xccc588 } );
 const nodeMaterial4 = new THREE.MeshLambertMaterial( { color: 0x00544c } );
 const nodeMaterial5 = new THREE.MeshLambertMaterial( { color: 0x003238 } );
 
-function RenderNode(laneNumber) {
+function RenderNode(laneNumber) {    
 
     let node;
     

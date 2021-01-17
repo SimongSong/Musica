@@ -1,4 +1,4 @@
-export const escFunction = (event) => {
+export function escFunction(event) {
   if (event.keyCode === 81) {
     //Q pressed
     console.log("Q");
