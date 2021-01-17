@@ -7,7 +7,6 @@ import {
   incrementTimer,
   updatePlayingStatus,
 } from "./store/mainReducer";
-import { escFunction } from "./gameManager/inputUtils";
 import AudioComponent from "./components/audioComponent";
 import SongSelection from "./components/SongSelection";
 

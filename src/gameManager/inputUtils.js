@@ -19,3 +19,11 @@ export function escFunction(event) {
     console.log("Esc");
   }
 };
+
+
+export function onKeyDown(event){
+    event.target.dataset[event.key] = true
+    setTimeout(() => {
+      event.target.dataset[event.key] = false
+    }, 300)
+}
